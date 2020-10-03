@@ -38,20 +38,12 @@ def create():
             return redirect(url_for('index'))
 
     else:
-<<<<<<< HEAD
-       return render_template('report/create.html')
-
-@bp.route('/location', methods=('GET', 'POST'))
-def location():
-    num_criteria = 10
-=======
         return render_template('report/create.html', rules=current_app.config['RULES'])
     
 
 @bp.route('/location', methods=('GET', 'POST'))
 def location():
     num_criteria == 10
->>>>>>> 319c019085dde35ecdb90826570969d3a624f715
 
     flags_list = conn.execute(
             'SELECT (FLAGS) FROM REPORTS WHERE LID = ?;', (g.LID,)
