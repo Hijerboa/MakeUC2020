@@ -1,7 +1,8 @@
-import functools
+import functools, os
 
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, flash, g, redirect, render_template, request, session, url_for,
+    current_app
 )
 from . import db
 
@@ -36,12 +37,10 @@ def create():
             return redirect(url_for('index'))
 
     else:
+        global rules
         if 'rules' not in globals():
-            global rules
-            with open('rules.txt') as f:
+            with open(current_app.config['RULES']) as f:
                 rules = list(f.readlines())
-        else:
-            global rules
 
         return render_template('report/create.html', rules=rules)
     
