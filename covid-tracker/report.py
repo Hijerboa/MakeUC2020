@@ -57,7 +57,7 @@ def location():
 
     cursor = db.get_db().cursor()
     flags_list = cursor.execute(
-            'SELECT (FLAGS) FROM REPORTS WHERE LID = %(int)s;', (g.LID,)
+            'SELECT (FLAGS) FROM REPORTS WHERE LID = %s;', (g.LID,)
         ).fetchone()
     cursor.close()
 
