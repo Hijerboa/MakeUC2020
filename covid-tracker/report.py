@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-import functools
-import criteria_constants
-=======
 import functools, os
->>>>>>> b6050b24f286a9473346967c9e8acdc7032b78f2
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for,
@@ -44,9 +39,8 @@ def create():
             return redirect(url_for('index'))
 
     else:
-<<<<<<< HEAD
-       return render_template('report/create.html')
-
+        return render_template('report/create.html', rules=current_app.config['RULES'])
+    
 @bp.route('/location', methods=('GET', 'POST'))
 def create():
     num_criteria == 10
@@ -66,7 +60,3 @@ def create():
     # TODO Maybe do things to weight the scores or something.
 
     return render_template('report/location.html', scores=flag_scores)
-=======
-        return render_template('report/create.html', rules=current_app.config['RULES'])
->>>>>>> b6050b24f286a9473346967c9e8acdc7032b78f2
-    
