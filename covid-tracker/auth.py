@@ -14,6 +14,7 @@ def register():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
+        password2 = request.form['password2']
         conn = db.get_db()
         error = None
 
@@ -21,11 +22,16 @@ def register():
             error = "Email is required."
         elif not password:
             error = "Password is required."
+        elif not password == password2:
+            error = "Passwords do not match."
         
         cursor = conn.cursor()
-        if cursor.execute(
-            'SELECT id FROM users WHERE email = %s', (email)
-        ).fetchone() is not None:
+
+        print(email)
+        cursor.execute(
+            'SELECT * FROM users WHERE email = %s',(email,)
+        ) 
+        if cursor.fetchone() is not None:
             error = f'User with email {email} is already registered!'
         cursor.close()
 
@@ -35,8 +41,9 @@ def register():
                 'INSERT INTO users (email, password) VALUES (%s, %s)', 
                 (email, generate_password_hash(password))
             )
-            cursor.commit()
+            conn.commit()
             cursor.close()
+            conn.close()
             return redirect(url_for('auth.login'))
 
         flash(error)
@@ -51,17 +58,18 @@ def login():
         password = request.form['password']
         cursor = db.get_db().cursor()
         error = None
-        user = cursor.execute(
-            'SELECT * FROM users WHERE email = ?', (email,)
-        ).fetchone()
+        cursor.execute(
+            'SELECT * FROM users WHERE email = %s', (email,)
+        )
+        user = cursor.fetchone()
         cursor.close()
 
-        if user is None or not check_password_hash(user['password'], password):
+        if user is None or not check_password_hash(user[2], password):
             error = 'Incorrect email or password.'
 
         if error is None:
             session.clear()
-            session['user_id'] = user['id']
+            session['user_id'] = user[0]
             return redirect(url_for('index'))
 
         flash(error)
@@ -76,10 +84,14 @@ def load_logged_in_user():
     if user_id is None:
         g.user = None
     else:
-        g.user = db.get_db().execute(
-            'SELECT * FROM users WHERE id = ?', (user_id,)
-        ).fetchone()
-
+        connection = db.get_db()
+        cursor = connection.cursor()
+        cursor.execute(
+            'SELECT id, email FROM users WHERE id = %s', (user_id,)
+        )
+        g.user = cursor.fetchone()
+        cursor.close()
+        connection.close()
 
 @bp.route('/logout')
 def logout():
