@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask
+from flask import (Flask, render_template)
 
 
 def create_app(test_config=None):
@@ -19,6 +19,6 @@ def create_app(test_config=None):
 
     @app.route('/')
     def index():
-        pass
+        return render_template('report/index.html')
 
     return app
