@@ -7,7 +7,7 @@
     <title>Covid Tracker</title>
 </head>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-<script src="https://maps.googleapis.com/maps/api/js?AIzaSyDCZD4B9s6Jn3qSwyVUCge09OeM43xaC_g&callback=initMap&libraries=&v=weekly"defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCZD4B9s6Jn3qSwyVUCge09OeM43xaC_g&callback=initMap&libraries=&v=weekly"defer></script>
 <style>
     .navbar {
         background-color: #d97c27;
@@ -60,12 +60,15 @@
     #map{
         height: 100%;
     }
+    #test{
+        height: 70vh;
+    }
 </style>
 <script>
     let map, infoWindow;
 
-    function initializeMap(){
-        map = new google.maps.Map(document.getElementId("map"), {
+    function initMap(){
+        map = new google.maps.Map(document.getElementById("map"), {
             center: { lat: -34.397, lng: 150.644},
             zoom: 10,
         });
@@ -125,7 +128,9 @@
             </ul>
         </div>
     </nav>
-    <div id="map"></div>
+    <div id ="test">
+        <div id="map"></div>
+    </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
