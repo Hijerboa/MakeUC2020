@@ -9,6 +9,7 @@ from . import auth
 
 bp = Blueprint('report', __name__, url_prefix='/report')
 
+
 @bp.route('/create', methods=('GET', 'POST'))
 #@auth.login_required # causes redirect to login if user not logged in
 def create():
@@ -41,8 +42,9 @@ def create():
     else:
         return render_template('report/create.html', rules=current_app.config['RULES'])
     
+
 @bp.route('/location', methods=('GET', 'POST'))
-def create():
+def location():
     num_criteria == 10
 
     flags_list = conn.execute(
