@@ -9,4 +9,4 @@ bp = Blueprint('report', __name__, url_prefix='/report')
 
 @bp.route('/create', methods=('GET', 'POST'))
 def create():
-    pass
+    return render_template('report/create.html')
