@@ -1,19 +1,87 @@
 <!doctype html>
-<title>{% block title %}{% endblock %} - Covid Tracker</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<nav>
-    <h1>Covid Tracker</h1>
-    <ul>
-        {% if g.user %}
-            <li><span>{{ g.user['email'] }}</span></li>
-            <li><a href="{{ url_for(auth.logout) }}">Log Out</a></li>
-        {% else %}
-            <li><a href="{{ url_for('auth.register') }}">Register</a></li>
-            <li><a href="{{ url_for('auth.login') }}">Login</a></li>
-        {% endif %}
-    </ul>
-</nav>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/9f741993fe.js" crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Covid Tracker</title>
+</head>
+<style>
+    .navbar {
+        background-color: #d97c27;
+        border-color: #d97c27;
+        border-radius: 0;
+    }
+
+    .navbar .navbar-brand,
+    .navbar .navbar-brand:hover,
+    .navbar .navbar-brand:focus {
+        color: #FFF;
+    }
+
+    .navbar .navbar-nav > li > a {
+        color: #FFF;
+    }
+
+    .navbar .navbar-nav > li > a:hover,
+    .navbar .navbar-nav > li > a:focus {
+        background-color: #C96100;
+    }
+
+    .navbar .navbar-nav > .active > a,
+    .navbar .navbar-nav > .active > a:hover,
+    .navbar .navbar-nav > .active > a:focus {
+        color: #FFF;
+        background-color: #C96100;
+    }
+
+    .navbar .navbar-text {
+        color: #FFF;
+    }
+
+    .navbar .navbar-toggle {
+        border-color: #C96100;
+    }
+
+    .navbar .navbar-toggle:hover,
+    .navbar .navbar-toggle:focus {
+        background-color: #C96100;
+    }
+
+    .navbar .navbar-toggle .icon-bar {
+        background-color: #FFF;
+    }
+</style>
+<body>
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+
+        <a class="navbar-bard" href="#">Covid Tracker</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#siteNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class ="collapse navbar-collapse" id="siteNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                {% if g.user %}
+                    <li class="nav-item">
+                        <span>{{ g.user['email'] }}</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.logout') }}">Log Out</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}"><b><i class="fas fa-user"></i> Register</b></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}"><b><i class="fas fa-sign-in-alt"></i> Login</b></a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<!--
 <section>
     <header>
         {% block header %}{% endblock %}
@@ -25,4 +93,4 @@
     <footer>
         <a href="{{ url_for('about') }}">About</a>
     </footer>
-</section>
+</section>-->
