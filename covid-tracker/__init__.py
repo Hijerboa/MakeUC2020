@@ -11,7 +11,10 @@ def create_app(test_config=None):
     else:
         app.config.from_mapping(test_config)
 
-    app.config['RULES'] = os.path.join(pathlib.Path(__file__).parent.absolute(), 'rules.txt')
+    rulesfile = os.path.join(pathlib.Path(__file__).parent.absolute(), 'rules.txt')
+    with open(rulesfile) as f:
+        rules = list(f.readlines())
+    app.config['RULES'] = rules
 
     from . import db
     db.init_app(app)

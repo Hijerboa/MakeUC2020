@@ -37,10 +37,5 @@ def create():
             return redirect(url_for('index'))
 
     else:
-        global rules
-        if 'rules' not in globals():
-            with open(current_app.config['RULES']) as f:
-                rules = list(f.readlines())
-
-        return render_template('report/create.html', rules=rules)
+        return render_template('report/create.html', rules=current_app.config['RULES'])
     
