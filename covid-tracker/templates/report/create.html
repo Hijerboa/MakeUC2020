@@ -5,4 +5,16 @@
 {% endblock %}
 
 {% block content %}
+    <form method="POST">
+        {% for rule in rules %}
+            {% set id = 'criteria_' + loop.index0|string  + '_radio' %}
+            <label for="{{ id }}">{{ rule }}</label>
+            <select>
+                <option value="2">Yes</option>
+                <option value="0">No</option>
+                <option value="-1">N/A</option>
+            </select>
+        {% endfor %}
+        <input type="submit" value="Submit"/>
+    </form>
 {% endblock %}

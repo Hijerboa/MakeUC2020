@@ -1,4 +1,4 @@
-import os
+import os, pathlib
 
 from flask import (Flask, render_template)
 
@@ -10,6 +10,11 @@ def create_app(test_config=None):
         app.config.from_pyfile('config.py', silent=True)
     else:
         app.config.from_mapping(test_config)
+
+    rulesfile = os.path.join(pathlib.Path(__file__).parent.absolute(), 'rules.txt')
+    with open(rulesfile) as f:
+        rules = list(f.readlines())
+    app.config['RULES'] = rules
 
     from . import db
     db.init_app(app)
