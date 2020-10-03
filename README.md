@@ -36,25 +36,25 @@ explicitly, or it is unclear whether the guideline is being followed. Internally
 
 | Guideline | Type | Flag |
 | --------- | ---- | ---- |
-| Minimum of six feet between employees or utilize barriers. | Negative | flag1 |
-| Require all employees to wear facial coverings. | Negative | flag2 |
-| Limit number of employees allowed in break rooms. | Negative | flag3 |
-| Minimum of six feet between parties waiting and when dining. | Negative | flag4 |
-| Customers and guests must wear face coverings at all times, except when dining. | Negative | flag5 |
-| list of COVID-19 symptoms in a conspicuous place. | Negative | flag6 |
-| Establish and post maximum dining area capacity | Negative | flag7 |
-| establish ordering areas and waiting areas with clearly marked safe distancing | Negative | flag8 |
-| Remove self-service, table, and common area items | Negative | flag9 |
-| Private dining and bar seating areas follow all approved safe social distancing guidelines. | Negative | flag10 |
-| Minimum of six feet between employees or utilize barriers. | Positive | flag11 |
-| Require all employees to wear facial coverings. | Positive | flag12 |
-| Limit number of employees allowed in break rooms. | Positive | flag13 |
-| Minimum of six feet between parties waiting and when dining. | Positive | flag14 |
-| Customers and guests must wear face coverings at all times, except when dining. | Positive | flag15 |
-| list of COVID-19 symptoms in a conspicuous place. | Positive | flag16 |
-| Establish and post maximum dining area capacity | Positive | flag17 |
-| establish ordering areas and waiting areas with clearly marked safe distancing | Positive | flag18 |
-| Remove self-service, table, and common area items | Positive | flag19 |
-| Private dining and bar seating areas follow all approved safe social distancing guidelines. | Positive | flag20 |
+| Minimum of six feet between employees or utilize barriers. | Negative | 0x80000000 |
+| Require all employees to wear facial coverings. | Negative | 0x40000000 |
+| Limit number of employees allowed in break rooms. | Negative | 0x20000000 |
+| Minimum of six feet between parties waiting and when dining. | Negative | 0x10000000 |
+| Customers and guests must wear face coverings at all times, except when dining. | Negative | 0x8000000 |
+| list of COVID-19 symptoms in a conspicuous place. | Negative | 0x4000000 |
+| Establish and post maximum dining area capacity | Negative | 0x2000000 |
+| establish ordering areas and waiting areas with clearly marked safe distancing | Negative | 0x1000000 |
+| Remove self-service, table, and common area items | Negative | 0x800000 |
+| Private dining and bar seating areas follow all approved safe social distancing guidelines. | Negative | 0x400000 |
+| Minimum of six feet between employees or utilize barriers. | Positive | 0x8000 |
+| Require all employees to wear facial coverings. | Positive | 0x4000 |
+| Limit number of employees allowed in break rooms. | Positive | 0x2000 |
+| Minimum of six feet between parties waiting and when dining. | Positive | 0x1000 |
+| Customers and guests must wear face coverings at all times, except when dining. | Positive | 0x800 |
+| list of COVID-19 symptoms in a conspicuous place. | Positive | 0x400 |
+| Establish and post maximum dining area capacity | Positive | 0x200 |
+| establish ordering areas and waiting areas with clearly marked safe distancing | Positive | 0x100 |
+| Remove self-service, table, and common area items | Positive | 0x80 |
+| Private dining and bar seating areas follow all approved safe social distancing guidelines. | Positive | 0x40 |
 
-
+Neutral reports are indicated by the lack of a flag in a guideline (positive or negative).
