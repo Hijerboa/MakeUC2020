@@ -1,0 +1,25 @@
+<!doctype html>
+<title>{% block title %}{% endblock %} - Covid Tracker</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<nav>
+    <h1>Covid Tracker</h1>
+    <ul>
+        {% if g.user %}
+            <li><span>{{ g.user['email'] }}</span></li>
+            <li><a href="{{ url_for(auth.logout) }}">Log Out</a></li>
+        {% else %}
+            <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+            <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+        {% endif %}
+    </ul>
+</nav>
+<section>
+    <header>
+        {% block header %}{% endblock %}
+    </header>
+    {% for message int get_flashed_messages() %}
+        <div class="flash">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+</section>
