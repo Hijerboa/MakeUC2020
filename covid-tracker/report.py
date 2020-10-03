@@ -36,5 +36,12 @@ def create():
             return redirect(url_for('index'))
 
     else:
-       return render_template('report/create.html')
+        if 'rules' not in globals():
+            global rules
+            with open('rules.txt') as f:
+                rules = list(f.readlines())
+        else:
+            global rules
+
+        return render_template('report/create.html', rules=rules)
     
