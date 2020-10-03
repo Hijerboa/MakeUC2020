@@ -51,17 +51,21 @@
     .navbar .navbar-toggle .icon-bar {
         background-color: #FFF;
     }
+    #navBrand{
+        font-weight: bold;
+        font-size: 20px;
+    }
 </style>
 <body>
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
 
-        <a class="navbar-bard" href="#">Covid Tracker</a>
+        <a class="navbar-bard" href="#" id="navBrand">Covid Tracker</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#siteNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class ="collapse navbar-collapse" id="siteNavbar">
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="navbar-nav ml-auto">
                 {% if g.user %}
                     <li class="nav-item">
                         <span>{{ g.user['email'] }}</span>
