@@ -9,12 +9,13 @@
         {% for rule in rules %}
             {% set id = 'criteria_' + loop.index0|string  + '_radio' %}
             <label for="{{ id }}">{{ rule }}</label>
-            <select>
+            <select id="{{ id }}" name="{{ id }}">
                 <option value="2">Yes</option>
                 <option value="0">No</option>
                 <option value="-1">N/A</option>
             </select>
         {% endfor %}
+        <input type="text" id="criteria_report", name="criteria_report"/>
         <input type="submit" value="Submit"/>
     </form>
 {% endblock %}

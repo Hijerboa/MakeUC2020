@@ -21,18 +21,22 @@ def register():
             error = "Email is required."
         elif not password:
             error = "Password is required."
-        elif conn.execute(
-            'SELECT id FROM users WHERE email = ?', (email)
+        
+        cursor = conn.cursor()
+        if cursor.execute(
+            'SELECT id FROM users WHERE email = %s', (email)
         ).fetchone() is not None:
             error = f'User with email {email} is already registered!'
+        cursor.close()
 
         if error is None:
-            conn.execute(
-                'INSERT INTO users (email, password) VALUES (?, ?)', 
+            cursor = conn.cursor()
+            cursor.execute(
+                'INSERT INTO users (email, password) VALUES (%s, %s)', 
                 (email, generate_password_hash(password))
             )
-
-            conn.commit()
+            cursor.commit()
+            cursor.close()
             return redirect(url_for('auth.login'))
 
         flash(error)
@@ -45,11 +49,12 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-        conn = db.get_db()
+        cursor = db.get_db().cursor()
         error = None
-        user = conn.execute(
+        user = cursor.execute(
             'SELECT * FROM users WHERE email = ?', (email,)
         ).fetchone()
+        cursor.close()
 
         if user is None or not check_password_hash(user['password'], password):
             error = 'Incorrect email or password.'
@@ -82,7 +87,7 @@ def logout():
     return redirect(url_for('index'))
 
 
-def log_required(view):
+def login_required(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         if g.user is None:
