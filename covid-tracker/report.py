@@ -34,7 +34,7 @@ def create():
         # TODO: Insert into the database.
         if cursor.execute(
             'INSERT INTO reports (UID, LID, TIMESTAMP, FLAGS, TEXT) VALUES (%s, %s, %s, %s, %s);', 
-            (0, 0, timestamp, flags_out, report_text)
+            (g.LID, g.UID, timestamp, flags_out, report_text)
         ).fetchone() is not None:
             cursor.commit()
         else:
