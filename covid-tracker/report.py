@@ -23,9 +23,9 @@ def create():
         
         flags_out = 0
         for x in enumerate(flags):
-            flags_out += x[1] << x[0]
+            flags_out += x[1] << (32 - x[0])
 
-        report_text = request.form['textbox']
+        report_text = request.form['textbox'] # TODO Make this match the naming convention for the selector
 
         user = conn.execute(
             'INSERT INTO reports (UID, LID, TIMESTAMP, FLAGS, TEXT) VALUES (?, ?, current_timestamp, ?, ?);', (g.UID, g.LID, flags_out, report_text,)
