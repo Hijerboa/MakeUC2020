@@ -5,10 +5,12 @@ from flask import (
     current_app
 )
 from . import db
+from . import auth
 
 bp = Blueprint('report', __name__, url_prefix='/report')
 
 @bp.route('/create', methods=('GET', 'POST'))
+#@auth.login_required # causes redirect to login if user not logged in
 def create():
     if request.method == 'POST':
         flags = [0 for x in range(32)]
