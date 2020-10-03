@@ -17,8 +17,15 @@ def create_app(test_config=None):
     from . import auth
     app.register_blueprint(auth.bp)
 
+    from . import report
+    app.register_blueprint(report.bp)
+
     @app.route('/')
     def index():
         return render_template('report/index.html')
+
+    @app.route('/about')
+    def about():
+        return render_template('report/about.html')
 
     return app
