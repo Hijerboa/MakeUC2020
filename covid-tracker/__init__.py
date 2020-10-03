@@ -1,6 +1,15 @@
 import os, pathlib
+from configparser import ConfigParser
 
 from flask import (Flask, render_template)
+
+def config_db(filename='db.ini'):
+    db = dict()
+    with open(filename) as f:
+        for line in f:
+            key, value = line.split('=')
+            db[key] = value.strip()
+    return db
 
 
 def create_app(test_config=None):
@@ -15,6 +24,9 @@ def create_app(test_config=None):
     with open(rulesfile) as f:
         rules = list(f.readlines())
     app.config['RULES'] = rules
+
+    connfile = os.path.join(pathlib.Path(__file__).parent.absolute(), 'db.ini')
+    app.config["CONN_PARAMS"] = config_db(connfile)
 
     from . import db
     db.init_app(app)

@@ -5,18 +5,10 @@ from flask import current_app, g
 from flask.cli import with_appcontext
 
 
-def get_db(ini='db.ini'):
-    global conn_str
-    if conn_str not in globals():
-        try:
-            with open(ini) as f:
-                conn_str = ''.join(f.readlines())
-        except OSError as e:
-            print(e)
-
+def get_db():
 
     if 'db' not in g:
-        g.db = psycopg2.connect(conn_str)
+        g.db = psycopg2.connect(**current_app.config["CONN_PARAMS"])
 
     return g.db
 
