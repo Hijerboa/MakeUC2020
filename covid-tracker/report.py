@@ -5,7 +5,6 @@ from flask import (
     current_app
 )
 from . import db
-from . import auth
 
 bp = Blueprint('report', __name__, url_prefix='/report')
 
@@ -38,11 +37,11 @@ def create():
             return redirect(url_for('index'))
 
     else:
-        return render_template('report/create.html', rules=current_app.config['RULES'])
-    
+       return render_template('report/create.html')
+
 @bp.route('/location', methods=('GET', 'POST'))
-def create():
-    num_criteria == 10
+def location():
+    num_criteria = 10
 
     flags_list = conn.execute(
             'SELECT (FLAGS) FROM REPORTS WHERE LID = ?;', (g.LID,)
@@ -59,3 +58,4 @@ def create():
     # TODO Maybe do things to weight the scores or something.
 
     return render_template('report/location.html', scores=flag_scores)
+    
