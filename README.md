@@ -1,6 +1,6 @@
 # MakeUC2020
 
-Uses COVID-19 business guidelines provided by coronavirus.ohio.gov to allow users to provide reports how well businesses are following current COVID-19 regulations through a
+Uses COVID-19 business guidelines provided by the [Ohio Department of Health](coronavirus.ohio.gov) to allow users to provide reports how well businesses are following current COVID-19 regulations through a
 web interface, as well as view reports on businesses in the user's area. 
 
 ## The following guidelines are considered by the service:
