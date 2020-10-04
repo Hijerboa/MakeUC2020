@@ -55,7 +55,7 @@ def create():
             flash("Thanks for report!")
             return redirect(url_for('index'))
         flash(error)
-    return render_template('report/create.html', rules=current_app.config['RULES'])
+    return render_template('report/create.html', rules=current_app.config['RULES'], name=session['last_name'])
     
 
 @bp.route('/location')
@@ -110,5 +110,5 @@ def location():
 
     # TODO Maybe do things to weight the scores or something.
 
-    return render_template('report/location.html', scores=flag_scores)
+    return render_template('report/location.html', scores=flag_scores, name=name)
     

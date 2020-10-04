@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h1>{% block title %}Create Report{% endblock %}</h1>
+    <h1>{% block title %}{{ name }}{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
@@ -10,5 +10,3 @@
         <p>{{ score }}</p><br>
     {% endfor %}
 {% endblock %}
-
-<!-- {{ url_for('report.location') }}?title={{ loc_name }}&lat={{ lat }}&lng={{ lng }} GET request for previous location page-->
