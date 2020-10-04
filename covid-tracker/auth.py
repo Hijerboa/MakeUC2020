@@ -43,7 +43,7 @@ def register():
             )
             conn.commit()
             cursor.close()
-      
+            conn.close()
             return redirect(url_for('auth.login'))
 
         flash(error)
@@ -56,12 +56,19 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-        cursor = db.get_db().cursor()
         error = None
-        cursor.execute(
-            'SELECT * FROM users WHERE email = %s', (email,)
-        )
-        user = cursor.fetchone()
+        try:
+            cursor = db.get_db().cursor()
+        except:
+            error = 'Failed to create cursor'
+        try:
+            cursor.execute(
+                'SELECT * FROM users WHERE email = %s', (email,)
+            )
+            user = cursor.fetchone()
+        except:
+            error = 'Failed to fetch from database'
+            user = None
         cursor.close()
 
         if user is None or not check_password_hash(user[2], password):
@@ -70,8 +77,9 @@ def login():
         if error is None:
             session.clear()
             session['uid'] = user[0]
+            conn.close()
             return redirect(url_for('index'))
-
+        conn.close()
         flash(error)
 
     return render_template('auth/login.html')
