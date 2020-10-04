@@ -1,21 +1,67 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h1>{% block title %}Create Report{% endblock %}</h1>
+<style>
+    #header{
+        text-align: center;
+        font-weight: bold;
+    }
+    .labels{
+        text-align: left;
+    }
+    .input-group{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+{% endblock %}
+
+{% block head_content %}
 {% endblock %}
 
 {% block content %}
-    <form method="POST">
-        {% for rule in rules %}
-            {% set id = 'criteria_' + loop.index0|string  + '_radio' %}
-            <label for="{{ id }}">{{ rule }}</label>
-            <select id="{{ id }}" name="{{ id }}">
-                <option value="1">Yes</option>
-                <option value="-1">No</option>
-                <option value="0">N/A</option>
-            </select>
-        {% endfor %}
-        <input type="text" id="criteria_report", name="criteria_report"/>
-        <input type="submit" value="Submit"/>
-    </form>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <h1 id="header">What did you see?</h1>
+            </div>
+        </div>
+        <br />
+        <form method="POST">
+            {% for rule in rules %}
+                <div class="row">
+                    {% set id = 'criteria_' + loop.index0|string  + '_radio' %}
+                    <div class="col-lg-4 offset-lg-2">
+                        <label class="labels" for="{{ id }}">{{ rule }}</label>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <select class="form-control" id="{{ id }}" name="{{ id }}">
+                                <option value="0">N/A</option>
+                                <option value="1">Yes</option>
+                                <option value="-1">No</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <br />
+            {% endfor %}
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <input type="text" class="form-control mr-sm-2" placeholder="Comments?" aria-label="Commends" id="criteria_report" name="criteria_report">
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-4 offset-lg-4">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button class="btn btn-info btn-lg" type="submit" value="Submit">Submit</button>
+                        </span>
+                    </div> 
+                </div>
+            </div>
+        </form>
+    </div>
 {% endblock %}
