@@ -82,7 +82,7 @@ def login():
             session['uid'] = user[0]
             conn.close()
             return redirect(url_for('index'))
-        conn.close()
+        db.close_db()
         flash(error)
 
     return render_template('auth/login.html')
