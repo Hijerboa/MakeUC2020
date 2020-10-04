@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head_content %}
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCZD4B9s6Jn3qSwyVUCge09OeM43xaC_g&callback=initMap&libraries=&v=weekly"defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCZD4B9s6Jn3qSwyVUCge09OeM43xaC_g&callback=initMap&libraries=places"defer></script>
 <style>
     #map{
         height: 100%;
@@ -20,13 +20,13 @@
     }
 </style>
 <script>
-    let map, infoWindow;
-
+    let map, infoWindow, bounds;
     function initMap(){
         map = new google.maps.Map(document.getElementById("map"), {
             center: { lat: 41.48449, lng: -81.77829},
             zoom: 15,
         });
+        bounds = new google.maps.LatLngBounds();
         infoWindow = new google.maps.InfoWindow();
         //Attempt HTML5 geolocation
         if (navigator.geolocation){
@@ -40,6 +40,9 @@
                     infoWindow.setPosition(pos);
                     infoWindow.setContent("Current Location");
                     infoWindow.open(map);
+                    map.setCenter(pos);
+                    getNearby(pos);
+                    bounds.extend(pos);
                 },
                 () => {
                     handleLocationError(true, infoWindow, map.getCenter());
@@ -58,6 +61,36 @@
                 :"Error: Your browser doesn't support geolocation"
         );
         infoWindow.open(map)
+    }
+
+    //search for nearby results
+    function getNearby(location){
+        let request = {
+            location: location,
+            rankBy: google.maps.places.RankBy.DISTANCE,
+            type: "restaurant"
+        };
+        service = new google.maps.places.PlacesService(map);
+        console.log(request);
+        service.nearbySearch(request, nearbyCallback);
+    }
+
+    function nearbyCallback(results, status){
+        if (status == google.maps.places.PlacesServiceStatus.OK){
+            createMarkers(results);
+        }
+    }
+
+    function createMarkers(places){
+        places.forEach(place => {
+            let marker = new google.maps.Marker({
+                position: place.geometry.location,
+                map: map,
+                title: place.name
+            });
+            bounds.extend(place.geometry.location);
+        });
+        map.fitBounds(bounds);
     }
 </script>
 {% endblock %}
@@ -82,6 +115,8 @@
             </form>
         </div>
     </div>
+    <br />
+    <br />
     <div class="row">
         <div class="col-lg-10 offset-lg-1">
             <div id ="test">
