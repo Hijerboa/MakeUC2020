@@ -9,6 +9,11 @@ from . import db
 bp = Blueprint('report', __name__, url_prefix='/report')
 
 
+@bp.route('/about')
+def about():
+    return render_template('report/about.html')
+
+
 @bp.route('/create', methods=('GET', 'POST'))
 def create():
     if request.method == 'POST':
