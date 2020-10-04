@@ -52,6 +52,7 @@
         }else{
             //No geolocation
             handleLocationError(false, infoWindow, map.getCenter());
+            
         }
     }
     function handleLocationError(browserHasGeolocation, infoWindow, pos){
@@ -61,7 +62,9 @@
                 ?"Error: the geolocation service failed"
                 :"Error: Your browser doesn't support geolocation"
         );
-        infoWindow.open(map)
+        infoWindow.open(map);
+        getNearby(pos);
+        bounds.extend(pos);
     }
 
     //search for nearby results
