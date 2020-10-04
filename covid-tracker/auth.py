@@ -27,7 +27,6 @@ def register():
         
         cursor = conn.cursor()
 
-        print(email)
         cursor.execute(
             'SELECT * FROM users WHERE email = %s',(email,)
         ) 
@@ -43,9 +42,12 @@ def register():
             )
             conn.commit()
             cursor.close()
+            db.close_db()
       
+
             return redirect(url_for('auth.login'))
 
+        db.close_db()
         flash(error)
 
     return render_template('auth/register.html')
@@ -56,13 +58,21 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-        cursor = db.get_db().cursor()
         error = None
-        cursor.execute(
-            'SELECT * FROM users WHERE email = %s', (email,)
-        )
-        user = cursor.fetchone()
+        try:
+            cursor = db.get_db().cursor()
+        except:
+            error = 'Failed to create cursor'
+        try:
+            cursor.execute(
+                'SELECT * FROM users WHERE email = %s', (email,)
+            )
+            user = cursor.fetchone()
+        except:
+            error = 'Failed to fetch from database'
+            user = None
         cursor.close()
+        db.close_db()
 
         if user is None or not check_password_hash(user[2], password):
             error = 'Incorrect email or password.'
@@ -70,8 +80,9 @@ def login():
         if error is None:
             session.clear()
             session['uid'] = user[0]
+            conn.close()
             return redirect(url_for('index'))
-
+        conn.close()
         flash(error)
 
     return render_template('auth/login.html')
@@ -91,6 +102,7 @@ def load_logged_in_user():
         )
         g.user = cursor.fetchone()
         cursor.close()
+        db.close_db()
         
 
 @bp.route('/logout')

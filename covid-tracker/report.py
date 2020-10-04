@@ -9,6 +9,11 @@ from . import db
 bp = Blueprint('report', __name__, url_prefix='/report')
 
 
+@bp.route('/about')
+def about():
+    return render_template('report/about.html')
+
+
 @bp.route('/create', methods=('GET', 'POST'))
 def create():
     if request.method == 'POST':
@@ -45,8 +50,11 @@ def create():
 
         if error is None:
             conn.commit()
+            db.close_db()
             return redirect(url_for('index'))
-        flash(error)
+        else:
+            db.close_db()
+            flash(error)
     return render_template('report/create.html', rules=current_app.config['RULES'])
     
 
@@ -61,6 +69,7 @@ def location():
         )
     flags_list = cursor.fetchone()
     cursor.close()
+    db.close_db()
 
     flag_scores = [2.5 for x in range(num_criteria)]
     for flag_set in flags_list:
