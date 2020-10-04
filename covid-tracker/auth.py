@@ -42,12 +42,9 @@ def register():
             )
             conn.commit()
             cursor.close()
-<<<<<<< HEAD
-            conn.close()
-=======
             db.close_db()
       
->>>>>>> 3d22b6d63694ff15eb0ef9d1b0569a3bd36955cb
+
             return redirect(url_for('auth.login'))
 
         db.close_db()
