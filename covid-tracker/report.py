@@ -53,11 +53,13 @@ def create():
 @bp.route('/location', methods=('GET', 'POST'))
 def location():
     num_criteria = 10
-
+    
     cursor = db.get_db().cursor()
-    flags_list = cursor.execute(
+  
+    cursor.execute(
             'SELECT (FLAGS) FROM REPORTS WHERE LID = %s;', (g.LID,)
-        ).fetchone()
+        )
+    flags_list = cursor.fetchone()
     cursor.close()
 
     flag_scores = [2.5 for x in range(num_criteria)]
