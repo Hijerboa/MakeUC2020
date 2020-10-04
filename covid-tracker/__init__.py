@@ -1,7 +1,7 @@
-import os, pathlib
+import os, pathlib, json
 from configparser import ConfigParser
 
-from flask import (Flask, render_template)
+from flask import (Flask, render_template, request)
 
 def config_db(filename='db.ini'):
     db = dict()
@@ -41,8 +41,13 @@ def create_app(test_config=None):
     from . import report
     app.register_blueprint(report.bp)
 
-    @app.route('/')
+    @app.route('/', methods=('GET', 'POST'))
     def index():
-        return render_template('report/index.html')
+        keywords = None
+        print('got a post!')
+        if 'searchBar' in request.args:
+            keywords = request.args.get('searchBar')
+        print(keywords)
+        return render_template('report/index.html', keywords=json.dumps(keywords))
 
     return app

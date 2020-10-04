@@ -80,6 +80,10 @@ def login():
         if error is None:
             session.clear()
             session['uid'] = user[0]
+<<<<<<< HEAD
+=======
+            db.close_db()
+>>>>>>> nathan
             return redirect(url_for('index'))
         flash(error)
 

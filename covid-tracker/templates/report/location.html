@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Create Report{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    
+    {% for score in scores %}
+        <p>{{ score }}</p><br>
+    {% endfor %}
+{% endblock %}

@@ -17,7 +17,7 @@ def about():
 @bp.route('/create', methods=('GET', 'POST'))
 def create():
     if request.method == 'POST':
-        flags = [0 for x in range(32)]
+        flags = [0 for x in range(20)]
         num_criteria = 10
         error = None
 
@@ -25,13 +25,13 @@ def create():
             radio_str = 'criteria_' + str(i) + '_radio' # TODO Make this match the naming convention for the selector
             flag = int(request.form[radio_str])
             if flag == -1: # Negative
-                flags[x] = 1
+                flags[i] = 1
             elif flag == 1: # Positive
-                flags[x + 16] = 1
+                flags[i + 10] = 1
         
         flags_out = 0
         for x in enumerate(flags):
-            flags_out += x[1] << (31 - x[0])
+            flags_out += x[1] << (19 - x[0])
 
         report_text = request.form['criteria_report'] # TODO Make this match the naming convention for the selector
 
@@ -40,21 +40,20 @@ def create():
         cursor = conn.cursor()
         # TODO: Insert into the database.
         try:
+            print(flags_out)
             cursor.execute(
                 'INSERT INTO reports (UID, LID, TIMESTAMP, FLAGS, TEXT) VALUES (%s, %s, %s, %s, %s);', 
-                (session.get('uid'), 1, timestamp, flags_out, report_text)
+                (session.get('uid'), 2, timestamp, flags_out, report_text)
             )
-        except:
+        except Exception as e:
+            print(e)
             error = 'There was an error uploading your report, try again later.'
         cursor.close()
 
         if error is None:
             conn.commit()
-            db.close_db()
             return redirect(url_for('index'))
-        else:
-            db.close_db()
-            flash(error)
+        flash(error)
     return render_template('report/create.html', rules=current_app.config['RULES'])
     
 
@@ -65,18 +64,20 @@ def location():
     cursor = db.get_db().cursor()
   
     cursor.execute(
-            'SELECT (FLAGS) FROM REPORTS WHERE LID = %s;', (g.LID,)
+            'SELECT (FLAGS) FROM REPORTS WHERE LID = %s;', (2,)
         )
-    flags_list = cursor.fetchone()
+    flags_list = cursor.fetchall()
+    for x in flags_list:
+        print(x)
     cursor.close()
     db.close_db()
 
-    flag_scores = [2.5 for x in range(num_criteria)]
+    flag_scores = [0 for x in range(num_criteria)]
     for flag_set in flags_list:
         for i in range(num_criteria):
-            if not (flag_set & (1 << (31-i))) == 0:
+            if not (flag_set[0] & (1 << (19-i))) == 0:
                 flag_scores[i] -= (1.0 / len(flags_list))
-            if not (flag_set & (1 << (15-i))) == 0:
+            if not (flag_set[0] & (1 << (9-i))) == 0:
                 flag_scores[i] += (1.0 / len(flags_list))
 
     # TODO Maybe do things to weight the scores or something.
