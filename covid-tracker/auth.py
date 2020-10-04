@@ -80,9 +80,7 @@ def login():
         if error is None:
             session.clear()
             session['uid'] = user[0]
-            db.close_db()
             return redirect(url_for('index'))
-        db.close_db()
         flash(error)
 
     return render_template('auth/login.html')
