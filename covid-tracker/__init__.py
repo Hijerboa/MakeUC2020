@@ -1,7 +1,8 @@
 import os, pathlib, json
 from configparser import ConfigParser
 
-from flask import (Flask, render_template, request)
+from flask import (Flask, render_template, request, send_from_directory)
+
 
 def config_db(filename='db.ini'):
     db = dict()
@@ -13,7 +14,7 @@ def config_db(filename='db.ini'):
 
 
 def create_app(test_config=None):
-    app = Flask(__name__, instance_relative_config=True)
+    app = Flask(__name__, instance_relative_config=True, static_url_path='/static')
     
     app.config.from_mapping(
         SECRET_KEY='dev'
@@ -49,5 +50,4 @@ def create_app(test_config=None):
             keywords = request.args.get('searchBar')
         print(keywords)
         return render_template('report/index.html', keywords=json.dumps(keywords))
-
     return app
