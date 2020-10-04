@@ -2,13 +2,30 @@
 
 {% block head_content %}
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCZD4B9s6Jn3qSwyVUCge09OeM43xaC_g&callback=initMap&libraries=&v=weekly"defer></script>
+<style>
+    #map{
+        height: 100%;
+    }
+    #test{
+        height: 70vh;
+    }
+    #title{
+        text-align: center;
+    }
+    #searchBar{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+    }
+</style>
 <script>
     let map, infoWindow;
 
     function initMap(){
         map = new google.maps.Map(document.getElementById("map"), {
             center: { lat: -34.397, lng: 150.644},
-            zoom: 10,
+            zoom: 15,
         });
         infoWindow = new google.maps.InfoWindow();
         //Attempt HTML5 geolocation
@@ -19,6 +36,7 @@
                         lat: position.coords.latitude,
                         lng: position.coords.longitude,
                     };
+                    //infoWindow.setCenter(pos);
                     infoWindow.setPosition(pos);
                     infoWindow.setContent("Current Location");
                     infoWindow.open(map);
@@ -49,7 +67,27 @@
 
 
 {% block content %}
-<div id ="test">
-    <div id="map"></div>
+<div class="container-fluid">
+    <br />
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+            <h1 id="title">Find A Business</h1>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+            <form class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="searchBar">
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-10 offset-lg-1">
+            <div id ="test">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
