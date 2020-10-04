@@ -27,7 +27,6 @@ def register():
         
         cursor = conn.cursor()
 
-        print(email)
         cursor.execute(
             'SELECT * FROM users WHERE email = %s',(email,)
         ) 
@@ -43,9 +42,15 @@ def register():
             )
             conn.commit()
             cursor.close()
+<<<<<<< HEAD
             conn.close()
+=======
+            db.close_db()
+      
+>>>>>>> 3d22b6d63694ff15eb0ef9d1b0569a3bd36955cb
             return redirect(url_for('auth.login'))
 
+        db.close_db()
         flash(error)
 
     return render_template('auth/register.html')
@@ -70,6 +75,7 @@ def login():
             error = 'Failed to fetch from database'
             user = None
         cursor.close()
+        db.close_db()
 
         if user is None or not check_password_hash(user[2], password):
             error = 'Incorrect email or password.'
@@ -99,6 +105,7 @@ def load_logged_in_user():
         )
         g.user = cursor.fetchone()
         cursor.close()
+        db.close_db()
         
 
 @bp.route('/logout')

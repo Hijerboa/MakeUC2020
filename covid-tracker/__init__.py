@@ -45,8 +45,4 @@ def create_app(test_config=None):
     def index():
         return render_template('report/index.html')
 
-    @app.route('/about')
-    def about():
-        return render_template('report/about.html')
-
     return app
