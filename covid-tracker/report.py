@@ -4,6 +4,7 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for,
     current_app
 )
+from . import auth
 from . import db
 
 bp = Blueprint('report', __name__, url_prefix='/report')
@@ -15,6 +16,7 @@ def about():
 
 
 @bp.route('/create', methods=('GET', 'POST'))
+@auth.login_required
 def create():
     if request.method == 'POST':
         flags = [0 for x in range(20)]
