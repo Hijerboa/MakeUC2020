@@ -43,7 +43,7 @@ def register():
             )
             conn.commit()
             cursor.close()
-            conn.close()
+      
             return redirect(url_for('auth.login'))
 
         flash(error)
@@ -69,7 +69,7 @@ def login():
 
         if error is None:
             session.clear()
-            session['user_id'] = user[0]
+            session['uid'] = user[0]
             return redirect(url_for('index'))
 
         flash(error)
@@ -79,7 +79,7 @@ def login():
 
 @bp.before_app_request
 def load_logged_in_user():
-    user_id = session.get('user_id')
+    user_id = session.get('uid')
 
     if user_id is None:
         g.user = None
@@ -91,7 +91,7 @@ def load_logged_in_user():
         )
         g.user = cursor.fetchone()
         cursor.close()
-        connection.close()
+        
 
 @bp.route('/logout')
 def logout():

@@ -14,6 +14,7 @@ def create():
     if request.method == 'POST':
         flags = [0 for x in range(32)]
         num_criteria = 10
+        error = None
 
         for i in range(num_criteria): 
             radio_str = 'criteria_' + str(i) + '_radio' # TODO Make this match the naming convention for the selector
@@ -30,23 +31,23 @@ def create():
         report_text = request.form['criteria_report'] # TODO Make this match the naming convention for the selector
 
         timestamp = datetime.datetime.now()
-        cursor = db.get_db().cursor()
+        conn = db.get_db()
+        cursor = conn.cursor()
         # TODO: Insert into the database.
-        if cursor.execute(
-            'INSERT INTO reports (UID, LID, TIMESTAMP, FLAGS, TEXT) VALUES (%s, %s, %s, %s, %s);', 
-            (g.LID, g.UID, timestamp, flags_out, report_text)
-        ).fetchone() is not None:
-            cursor.commit()
-        else:
+        try:
+            cursor.execute(
+                'INSERT INTO reports (UID, LID, TIMESTAMP, FLAGS, TEXT) VALUES (%s, %s, %s, %s, %s);', 
+                (session.get('uid'), 1, timestamp, flags_out, report_text)
+            )
+        except:
             error = 'There was an error uploading your report, try again later.'
         cursor.close()
 
         if error is None:
-            session.clear()
+            conn.commit()
             return redirect(url_for('index'))
-
-    else:
-        return render_template('report/create.html', rules=current_app.config['RULES'])
+        flash(error)
+    return render_template('report/create.html', rules=current_app.config['RULES'])
     
 
 @bp.route('/location', methods=('GET', 'POST'))
