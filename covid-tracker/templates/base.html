@@ -10,6 +10,7 @@
     <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Ohio Safe Businesses</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico')}}">
     {% block head_content %}
     {% endblock %}
 </head>
@@ -73,7 +74,9 @@
         </style>
         <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
         <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-            <a class="navbar-bard" href="/" id="navBrand">Ohio Safe Businesses</a>
+            <a class="navbar-bard" href="/" id="navBrand">
+                <img src="{{ url_for('static', filename='makeUCIcon.png')}}" width="30" height="30" alt="Ohio Safe Businesses">
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#siteNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
