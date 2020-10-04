@@ -55,7 +55,7 @@ def create():
             flash("Thanks for your report!")
             return redirect(url_for('index'))
         flash(error)
-    return render_template('report/create.html', rules=current_app.config['RULES'])
+    return render_template('report/create.html', rules=current_app.config['RULES'], name=session['last_name'])
     
 
 @bp.route('/location')
@@ -64,9 +64,18 @@ def location():
     conn = db.get_db()
     cursor = conn.cursor()
 
-    name = request.args.get('title')
-    lat = request.args.get('lat')
-    lng = request.args.get('lng')
+    if 'title' in request.args and 'lat' in request.args and 'lng' in request.args:
+        name = request.args.get('title')
+        lat = request.args.get('lat')
+        lng = request.args.get('lng')
+        session['last_name'] = name
+        session['last_lat'] = lat
+        session['last_lng'] = lng
+    else:
+        name = session['last_name']
+        lat = session['last_lat']
+        lng = session['last_lng']
+
 
     cursor.execute(
         'SELECT (ID) FROM LOCATIONS WHERE NAME = %s and LOCATION = point(%s, %s);', (name, lat, lng,)
@@ -101,5 +110,5 @@ def location():
 
     # TODO Maybe do things to weight the scores or something.
 
-    return render_template('report/location.html', scores=flag_scores)
+    return render_template('report/location.html', scores=flag_scores, name=name)
     
