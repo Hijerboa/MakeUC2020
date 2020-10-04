@@ -98,12 +98,20 @@
         }
     }
 
+
     function createMarkers(places){
         places.forEach(place => {
             let marker = new google.maps.Marker({
                 position: place.geometry.location,
                 map: map,
-                title: place.name
+                title: place.name,
+            });
+            marker.addListener("click", () => {
+                let window = new google.maps.InfoWindow({
+                    content: `<a href={{ url_for('report.location') }}?title=${marker.title.replaceAll(" ", "%20")}&lat=${marker.position.lat().toString()}&lng=${marker.position.lng()}>${marker.title}<a>`
+                })
+                console.log(window.content)
+                window.open(map, marker);
             });
             bounds.extend(place.geometry.location);
         });

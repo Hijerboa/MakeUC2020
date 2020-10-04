@@ -43,7 +43,7 @@ def create():
             print(flags_out)
             cursor.execute(
                 'INSERT INTO reports (UID, LID, TIMESTAMP, FLAGS, TEXT) VALUES (%s, %s, %s, %s, %s);', 
-                (session.get('uid'), 2, timestamp, flags_out, report_text)
+                (session.get('uid'), session['lid'], timestamp, flags_out, report_text)
             )
         except Exception as e:
             print(e)
@@ -57,14 +57,32 @@ def create():
     return render_template('report/create.html', rules=current_app.config['RULES'])
     
 
-@bp.route('/location', methods=('GET', 'POST'))
+@bp.route('/location')
 def location():
     num_criteria = 10
-    
-    cursor = db.get_db().cursor()
+    conn = db.get_db()
+    cursor = conn.cursor()
+
+    name = request.args.get('title')
+    lat = request.args.get('lat')
+    lng = request.args.get('lng')
+
+    cursor.execute(
+        'SELECT (ID) FROM LOCATIONS WHERE NAME = %s and LOCATION = point(%s, %s);', (name, lat, lng,)
+    )
+    session['lid'] = cursor.fetchone()
+    if session['lid'] == None:
+        cursor.execute(
+            'INSERT INTO LOCATIONS (NAME, LOCATION, SCORE) values (%s, point(%s, %s), 0)', (name, lat, lng)
+        )
+        conn.commit()
+        cursor.execute(
+        'SELECT (ID) FROM LOCATIONS WHERE NAME = %s and LOCATION = point(%s, %s);', (name, lat, lng,)
+        )
+        session['lid'] = cursor.fetchone()
   
     cursor.execute(
-            'SELECT (FLAGS) FROM REPORTS WHERE LID = %s;', (2,)
+            'SELECT (FLAGS) FROM REPORTS WHERE LID = %s;', (session['lid'])
         )
     flags_list = cursor.fetchall()
     for x in flags_list:
