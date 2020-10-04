@@ -64,9 +64,18 @@ def location():
     conn = db.get_db()
     cursor = conn.cursor()
 
-    name = request.args.get('title')
-    lat = request.args.get('lat')
-    lng = request.args.get('lng')
+    if 'title' in request.args and 'lat' in request.args and 'lng' in request.args:
+        name = request.args.get('title')
+        lat = request.args.get('lat')
+        lng = request.args.get('lng')
+        session['last_name'] = name
+        session['last_lat'] = lat
+        session['last_lng'] = lng
+    else:
+        name = session['last_name']
+        lat = session['last_lat']
+        lng = session['last_lng']
+
 
     cursor.execute(
         'SELECT (ID) FROM LOCATIONS WHERE NAME = %s and LOCATION = point(%s, %s);', (name, lat, lng,)

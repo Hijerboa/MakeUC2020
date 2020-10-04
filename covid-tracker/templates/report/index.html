@@ -113,15 +113,7 @@
             });
             bounds.extend(place.geometry.location);
         });
-        google.map.event.addListener(marker, 'click', () => {
-            let request = {
-                placeId: place.place_id,
-                fields: ['name', 'formatted_addres', 'geometery', 'rating', 'website', 'photos']
-            };
-            service.getDetails(request, (placeResult, status) => {
-                showDetail(placeResult, marker, status)
-            });
-        }); 
+        
         map.fitBounds(bounds);
     }
     
