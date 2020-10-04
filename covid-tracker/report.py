@@ -52,6 +52,7 @@ def create():
 
         if error is None:
             conn.commit()
+            flash("Thanks for report!")
             return redirect(url_for('index'))
         flash(error)
     return render_template('report/create.html', rules=current_app.config['RULES'])
