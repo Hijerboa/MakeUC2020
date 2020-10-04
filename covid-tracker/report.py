@@ -110,5 +110,5 @@ def location():
 
     # TODO Maybe do things to weight the scores or something.
 
-    return render_template('report/location.html', scores=flag_scores, name=name)
+    return render_template('report/location.html', scores=flag_scores, name=name, rules=current_app.config['RULES'])
     

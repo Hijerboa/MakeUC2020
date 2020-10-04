@@ -1,12 +1,61 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h1>{% block title %}{{ name }}{% endblock %}</h1>
+<style>
+    #header{
+        text-align: center;
+        font-weight: bold;
+    }
+    .labels{
+        text-align: left;
+    }
+    .input-group{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #text{
+        text-align: center;
+    }
+    .score{
+        text-align: center;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
-    
+    <br />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <h1 id="header">{{ name }}<h1>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3" id="text">
+                <h3>Were you just at {{ name }}?</h3>
+                <h3>Tell us what you saw:</h3>
+                <br />
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <a href="{{url_for('report.create')}}" class="btn btn-info btn-lg" role="button">Submit a Report</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
     {% for score in scores %}
-        <p>{{ score }}</p><br>
+        <div class="row">
+            <div class="col-lg-4 offset-lg-2">
+                <label class="labels" for="{{ id }}">{{rules[loop.index0]}}</label>
+            </div>
+            <div class="col-lg-4">
+                <h4 class="score">Average Score: {{ score }}</h2>
+            </div>
+        </div>
     {% endfor %}
 {% endblock %}
+
+
