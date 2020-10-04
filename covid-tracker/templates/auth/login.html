@@ -1,13 +1,48 @@
 {% extends 'base.html' %}
 
+{% block head_content %}
+<style>
+    #login_text{
+        text-align: center;
+        font-weight: bold;
+    }
+    .input-group{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+{% endblock %}
+
 {% block header %}
-    <h1>{% block title %}Login{% endblock %}</h1>
+   <!-- <h1>{% block title %}Login{% endblock %}</h1>-->
 {% endblock %}
 
 {% block content %}
-    <form method="POST">
-        <input type="text" id="email", name="email"/>
-        <input type="password" id="password", name="password"/>
-        <input type="submit" value="Submit"/>
-    </form>
+    <div class="container-fluid">
+        <br />
+        <div class = "row">
+            <div class="col-lg-6 offset-lg-3">
+                <h1 id=login_text>Login:</h1>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <form method="POST">
+                    <input type="text" class="form-control mr-sm-2" placeholder="Email" aria-label="Email" id="email" name="email">
+                    <br />
+                    <input type="password" class="form-control mr-sm-2" placeholder="Password" aria-label="Password" id="password" name="password">
+                    <br />
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button class="btn btn-info btn-lg" type="submit" value="Submit">Submit</button>
+                        </span>
+                    </div>
+                    <br />
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}

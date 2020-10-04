@@ -68,7 +68,7 @@
         </style>
         <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
         <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-            <a class="navbar-bard" href="/index.html" id="navBrand">Covid Tracker</a>
+            <a class="navbar-bard" href="#" id="navBrand">Covid Tracker</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#siteNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -76,10 +76,10 @@
                 <ul class="navbar-nav ml-auto">
                     {% if g.user %}
                         <li class="nav-item">
-                            <span>{{ g.user[1] }}</span>
+                            <span class="nav-link"><b><i class="fas fa-user"></i> {{ g.user[1] }}<b></span>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('auth.logout') }}">Log Out</a>
+                            <a class="nav-link" href="{{ url_for('auth.logout') }}"><b><i class="fas fa-sign-in-alt"></i> Log Out</b></a>
                         </li>
                     {% else %}
                         <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}"><b><i class="fas fa-user"></i> Register</b></a></li>
