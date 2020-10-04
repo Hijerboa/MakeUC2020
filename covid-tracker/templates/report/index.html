@@ -1,8 +1,55 @@
 {% extends 'base.html' %}
 
-{% block header %}
-    <h1>{% block title %}Index{% endblock %}</h1>
+{% block head_content %}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCZD4B9s6Jn3qSwyVUCge09OeM43xaC_g&callback=initMap&libraries=&v=weekly"defer></script>
+<script>
+    let map, infoWindow;
+
+    function initMap(){
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: -34.397, lng: 150.644},
+            zoom: 10,
+        });
+        infoWindow = new google.maps.InfoWindow();
+        //Attempt HTML5 geolocation
+        if (navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    };
+                    infoWindow.setPosition(pos);
+                    infoWindow.setContent("Current Location");
+                    infoWindow.open(map);
+                },
+                () => {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                }
+            );
+        }else{
+            //No geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+        }
+    }
+    function handleLocationError(browserHasGeolocation, infoWindow, pos){
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(
+            browserHasGeolocation
+                ?"Error: the geolocation service failed"
+                :"Error: Your browser doesn't support geolocation"
+        );
+        infoWindow.open(map)
+    }
+</script>
 {% endblock %}
 
+{% block header %}
+{% endblock %}
+
+
 {% block content %}
+<div id ="test">
+    <div id="map"></div>
+</div>
 {% endblock %}
